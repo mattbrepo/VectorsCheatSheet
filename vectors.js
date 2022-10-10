@@ -1,0 +1,142 @@
+const QuaternionFromTo = (fromVec, toVec) => {
+    const normal = BABYLON.Vector3.Cross(fromVec, toVec);
+    const angle = BABYLON.Vector3.GetAngleBetweenVectors(fromVec, toVec, normal);
+    return BABYLON.Quaternion.RotationAxis(normal, angle);
+};    
+
+const RotationFromTo = (fromVec, toVec) => {
+    return QuaternionFromTo(fromVec, toVec).toEulerAngles();
+};
+
+const drawArrow = (scene, p1, p2, color, scale) => {
+    const vBaseMesh = new BABYLON.Vector3(0, 1, 0);
+    const v12 = p2.subtract(p1);
+    const v12Unit = p2.subtract(p1).normalize();
+    const length = BABYLON.Vector3.Distance(p1, p2);
+
+    const material = new BABYLON.StandardMaterial(scene);
+    material.alpha = 1;
+    material.diffuseColor = color;
+    
+    const arrowHeadLen = 2;
+    const p2Mod = p2.subtract(v12Unit.scale(arrowHeadLen));
+    const arrow_body = BABYLON.MeshBuilder.CreateTube("arrow_body", {path: [p1, p2Mod], radius: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene);
+    arrow_body.material = material;
+
+    const arrow_head = BABYLON.MeshBuilder.CreateCylinder("cone_body", {diameterTop:0, height: arrowHeadLen, diameterBottom: 1.5}, scene);
+    arrow_head.position = p2.subtract(v12Unit.scale(arrowHeadLen / 2)); // the arrow head is centered on p2 shifted by half its body 
+    arrow_head.rotation = RotationFromTo(vBaseMesh, v12Unit); // from 0,1,0 which is how to mesh is drawn and p2p1  
+    arrow_head.material = material;
+
+    if (scale) {
+        var pScale = p1;
+        for(let step = 0; step < Math.trunc(length) - 2; step++) {
+            pScale =  pScale.add(v12Unit);
+            const scale_cyl = BABYLON.MeshBuilder.CreateCylinder("scale_cyl", {height: 0.2, diameter: 2});            
+            scale_cyl.position = pScale;
+            scale_cyl.rotation = RotationFromTo(vBaseMesh, v12);
+            scale_cyl.material = material;
+        }
+    }
+};
+
+const drawAxes = (scene, length) => {
+    // XYZ -> RGB
+    pOrigin = new BABYLON.Vector3(0, 0, 0);
+    drawArrow(scene, pOrigin, new BABYLON.Vector3(length, 0, 0), new BABYLON.Color3(1, 0, 0), true);
+    drawArrow(scene, pOrigin, new BABYLON.Vector3(0, length, 0), new BABYLON.Color3(0, 1, 0), true);
+    drawArrow(scene, pOrigin, new BABYLON.Vector3(0, 0, length), new BABYLON.Color3(0, 0, 1), true);
+};
+
+const drawCyl = (scene, p1, p2, color) => {
+    const material = new BABYLON.StandardMaterial(scene);
+    material.alpha = 1;
+    material.diffuseColor = color;
+
+    const cyl = BABYLON.MeshBuilder.CreateTube("cyl", {path: [p1, p2], radius: 0.5, sideOrientation: BABYLON.Mesh.DOUBLESIDE}, scene);
+    cyl.material = material;
+    return p2.subtract(p1);
+};
+
+//
+// Draw cylinder colored black/white based on being left/right of the vector p1p2
+const drawColoredCyl = (scene, p1, p2, index12, pEnd) => {
+    var pStart = p1;
+    var v = p2.subtract(p1);
+    if (index12 === 2) {
+        pStart = p2;
+        //v = p1.subtract(p2);
+    }
+
+    var w = pEnd.subtract(pStart);
+    var color = new BABYLON.Color3(0, 0, 0); 
+    if (Math.sign(BABYLON.Vector3.Cross(v, w).z) > 0) {
+        color = new BABYLON.Color3(1, 1, 1); 
+    }
+
+    return drawCyl(scene, pStart, pEnd, color);
+};
+
+var createScene = function () {
+
+    // Create the scene space
+    var scene = new BABYLON.Scene(engine);
+    
+    // Add a camera to the scene and attach it to the canvas
+    var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI * 1.6, Math.PI / 4, 55, new BABYLON.Vector3(1, 0, 0), scene);
+    camera.attachControl(canvas, true);
+
+    // Add lights to the scene
+    var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+    var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
+
+    // Draw axes
+    drawAxes(scene, 20);
+
+    // --- two vector notations 
+    const pO = new BABYLON.Vector3(0, 0, 0);
+    //const pA = new BABYLON.Vector3(3, 5, 0);
+    //const pB = new BABYLON.Vector3(7, 8, 9);
+    //const v = pB.subtract(pA);
+    //drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 1), false);
+    //drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
+
+    //// --- unit vector
+    //const vUnit = v.normalize();
+
+    //// --- scalar multiplication
+    //const vScale = v.scale(-1);
+    //drawArrow(scene, pO, vScale, new BABYLON.Color3(0.86, 0.3, 0.91), false); // purple
+    //drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false); // light blue
+
+    // --- cross product
+    const pA = new BABYLON.Vector3(5, 5, 0);
+    const pB = new BABYLON.Vector3(10, 5, 0);
+    const pC = new BABYLON.Vector3(5, 10, 0);
+    scene.useRightHandedSystem = true; // activate the right-hand system on the 3D scene
+    drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 0), false);
+    drawArrow(scene, pA, pC, new BABYLON.Color3(1, 1, 1), false);
+    const v = pB.subtract(pA);
+    const w = pC.subtract(pA);
+    var ortho = BABYLON.Vector3.Cross(v, w);
+    ortho = ortho.normalize();
+    const pD = pA.add(ortho.scale(10));
+    drawArrow(scene, pA, pD, new BABYLON.Color3(1, 0, 1), false);
+
+    //// --- Given the vector p1p2, which side are vectors starting either from 1 or 2?    
+    //const p1 = new BABYLON.Vector3(3, 3, 3);
+    //const p2 = new BABYLON.Vector3(5, 4, 5);
+    //drawCyl(scene, p1, p2, new BABYLON.Color3(0, 0.5, 1)); 
+    //
+    //const pA = new BABYLON.Vector3(1, 1, 0);
+    //const pB = new BABYLON.Vector3(7, 8, 9);
+    //const pD =  new BABYLON.Vector3(7, 1, 9);
+    //const pE =  new BABYLON.Vector3(0, 7, 0);
+    //drawColoredCyl(scene, p1, p2, 1, pA);
+    //drawColoredCyl(scene, p1, p2, 1, pE);
+    //drawColoredCyl(scene, p1, p2, 2, pB);
+    //drawColoredCyl(scene, p1, p2, 2, pD);
+    ////drawColoredCyl(scene, p1, p2, 2, new BABYLON.Vector3(9, 4, 6));
+    
+    return scene;
+};
