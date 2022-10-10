@@ -10,11 +10,13 @@ I wanted to collect useful formulas related to vectors. For a few formulas, I ad
 
 ## Vectors
 
-- X, Y, Z axes are represented with R, G, B colors:
+X, Y, Z axes are represented with R, G, B colors:
 
 ![XYZ-RGB](/images/xyzrgb.jpg)
 
-- A vector _v_ going from point _A_ to point _B_:
+### Vector notations
+
+A vector _v_ going from point _A_ to point _B_:
 
 $$ \overrightarrow{AB} = (x_B - x_A, y_B - y_A, z_B - z_A) $$ 
 
@@ -31,7 +33,7 @@ drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
 
 ![two vector notations](/images/vector_notation.jpg)
 
-- vector length (aka magnitude):
+### Vector length (aka magnitude):
 
 $$ ||v|| = \sqrt{x^2 + y^2 + z^2} $$ 
 
@@ -39,14 +41,14 @@ $$ ||v|| = \sqrt{x^2 + y^2 + z^2} $$
 const length = BABYLON.Vector3.Distance(pA, pB);
 ```
 
-- Unit vector (normalizing the vector):
+### Unit vector (normalizing the vector):
 
 $$ \frac{v}{||v||} $$ 
 
 ```javascript
 const vUnit = v.normalize();
 ```
-- Scalar multiplication
+### Scalar multiplication
 
 $$ av = (ax, ay, az) $$ 
 
@@ -62,7 +64,7 @@ With a scale factor of -1:
 
 ![scalar multiplication](/images/scalar_mult_min1.jpg)
 
-- Dot product (aka scalar product, inner product, projection product)
+### Dot product (aka scalar product, inner product, projection product)
 
 $$ v \cdot w = ||v|| ||w|| \cos{\theta} = \sum_1^n{v_i w_i}  $$
 
@@ -72,13 +74,13 @@ where &theta; is the angle between the two vectors _v_ and _w_ and _n_ is the nu
 const scalar = BABYLON.Vector3.Dot(v, w);
 ```
 
-- Angle between two vectors
+### Angle between two vectors
 
 $$ \theta = \arccos{\frac{v \cdot w}{||v|| ||w||}} $$
 
 which can be simply derived from the dot product definition.
 
-- Cross product (aka vector product)
+### Cross product (aka vector product)
 
 $$ a \times b = ||a|| ||b|| \sin(\theta) n $$
 
@@ -115,6 +117,6 @@ The cross product can be used to identify which side the vector _b_ is in relati
 
 ![cross product wikipedia](/images/cross_product_wiki.gif)
 
-- Addition
+### Addition
 
 ...
