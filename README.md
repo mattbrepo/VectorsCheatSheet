@@ -74,7 +74,7 @@ const scalar = BABYLON.Vector3.Dot(v, w);
 
 - Angle between two vectors
 
-$$ \theta = \arccos{\frac{v \cdot w}{\|v\| \|w\|}} $$
+$$ \theta = \arccos{\frac{v \cdot w}{||v|| \|w\|}} $$
 
 which can be simply derived from the dot product definition.
 
