@@ -33,7 +33,7 @@ drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
 
 - vector length (aka magnitude):
 
-$$ \|v\| = \sqrt{x^2 + y^2 + z^2} $$ 
+$$ ||v|| = \sqrt{x^2 + y^2 + z^2} $$ 
 
 ```javascript
 const length = BABYLON.Vector3.Distance(pA, pB);
@@ -41,7 +41,7 @@ const length = BABYLON.Vector3.Distance(pA, pB);
 
 - Unit vector (normalizing the vector):
 
-$$ \frac{v}{\|v\|} $$ 
+$$ \frac{v}{||v||} $$ 
 
 ```javascript
 const vUnit = v.normalize();
@@ -64,7 +64,7 @@ With a scale factor of -1:
 
 - Dot product (aka scalar product, inner product, projection product)
 
-$$ v \cdot w = \|v\| \|w\| \cos{\theta} = \sum_1^n{v_i w_i}  $$
+$$ v \cdot w = ||v|| ||w|| \cos{\theta} = \sum_1^n{v_i w_i}  $$
 
 where &theta; is the angle between the two vectors _v_ and _w_ and _n_ is the number of components of the vectors (3 in the case of a 3D vector: x, y, z). Therefore, the result is 0 when the vectors are normal to each other (_cos(90°) = 0_).
 
@@ -74,13 +74,13 @@ const scalar = BABYLON.Vector3.Dot(v, w);
 
 - Angle between two vectors
 
-$$ \theta = \arccos{\frac{v \cdot w}{||v|| \|w\|}} $$
+$$ \theta = \arccos{\frac{v \cdot w}{||v|| ||w||}} $$
 
 which can be simply derived from the dot product definition.
 
 - Cross product (aka vector product)
 
-$$ a \times b = \|a\| \|b\| \sin(\theta) n $$
+$$ a \times b = ||a|| ||b|| \sin(\theta) n $$
 
 where \theta is the angle between _a_ and _b_ in the plane containing them (0°..180°) and _n_ is the unit vector perpendicular to such plane (right-hand rule):
 
