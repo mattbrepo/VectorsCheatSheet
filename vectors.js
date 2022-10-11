@@ -93,50 +93,84 @@ var createScene = function () {
     // Draw axes
     drawAxes(scene, 20);
 
-    // --- two vector notations 
+    // Tests
     const pO = new BABYLON.Vector3(0, 0, 0);
-    //const pA = new BABYLON.Vector3(3, 5, 0);
-    //const pB = new BABYLON.Vector3(7, 8, 9);
-    //const v = pB.subtract(pA);
-    //drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 1), false);
-    //drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
+    
+    // --- two vector notations 
+    if (false) {
+        const pA = new BABYLON.Vector3(3, 5, 0);
+        const pB = new BABYLON.Vector3(7, 8, 9);
+        const v = pB.subtract(pA);
+        drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 1), false);
+        drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
+    }
 
-    //// --- unit vector
-    //const vUnit = v.normalize();
+    // --- unit vector
+    if (false) {
+        const pA = new BABYLON.Vector3(3, 5, 0);
+        const pB = new BABYLON.Vector3(7, 8, 9);
+        const v = pB.subtract(pA);
+        const vUnit = v.normalize();
+    }
 
-    //// --- scalar multiplication
-    //const vScale = v.scale(-1);
-    //drawArrow(scene, pO, vScale, new BABYLON.Color3(0.86, 0.3, 0.91), false); // purple
-    //drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false); // light blue
+    // --- scalar multiplication
+    if (false) {
+        const pA = new BABYLON.Vector3(3, 5, 0);
+        const pB = new BABYLON.Vector3(7, 8, 9);
+        const v = pB.subtract(pA);
+        const vScale = v.scale(-1);
+        drawArrow(scene, pO, vScale, new BABYLON.Color3(0.86, 0.3, 0.91), false); // purple
+        drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false); // light blue
+    }
 
     // --- cross product
-    const pA = new BABYLON.Vector3(5, 5, 0);
-    const pB = new BABYLON.Vector3(10, 5, 0);
-    const pC = new BABYLON.Vector3(5, 10, 0);
-    scene.useRightHandedSystem = true; // activate the right-hand system on the 3D scene
-    drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 0), false);
-    drawArrow(scene, pA, pC, new BABYLON.Color3(1, 1, 1), false);
-    const v = pB.subtract(pA);
-    const w = pC.subtract(pA);
-    var ortho = BABYLON.Vector3.Cross(v, w);
-    ortho = ortho.normalize();
-    const pD = pA.add(ortho.scale(10));
-    drawArrow(scene, pA, pD, new BABYLON.Color3(1, 0, 1), false);
+    if (false) {
+        const pA = new BABYLON.Vector3(5, 5, 0);
+        const pB = new BABYLON.Vector3(10, 5, 0);
+        const pC = new BABYLON.Vector3(5, 10, 0);
+        scene.useRightHandedSystem = true; // activate the right-hand system on the 3D scene
+        drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 0), false);
+        drawArrow(scene, pA, pC, new BABYLON.Color3(1, 1, 1), false);
+        const v = pB.subtract(pA);
+        const w = pC.subtract(pA);
+        var ortho = BABYLON.Vector3.Cross(v, w);
+        ortho = ortho.normalize();
+        const pD = pA.add(ortho.scale(10));
+        drawArrow(scene, pA, pD, new BABYLON.Color3(1, 0, 1), false);
+    }
 
-    //// --- Given the vector p1p2, which side are vectors starting either from 1 or 2?    
-    //const p1 = new BABYLON.Vector3(3, 3, 3);
-    //const p2 = new BABYLON.Vector3(5, 4, 5);
-    //drawCyl(scene, p1, p2, new BABYLON.Color3(0, 0.5, 1)); 
-    //
-    //const pA = new BABYLON.Vector3(1, 1, 0);
-    //const pB = new BABYLON.Vector3(7, 8, 9);
-    //const pD =  new BABYLON.Vector3(7, 1, 9);
-    //const pE =  new BABYLON.Vector3(0, 7, 0);
-    //drawColoredCyl(scene, p1, p2, 1, pA);
-    //drawColoredCyl(scene, p1, p2, 1, pE);
-    //drawColoredCyl(scene, p1, p2, 2, pB);
-    //drawColoredCyl(scene, p1, p2, 2, pD);
-    ////drawColoredCyl(scene, p1, p2, 2, new BABYLON.Vector3(9, 4, 6));
+    // --- Given the vector p1p2, which side are vectors starting either from 1 or 2?    
+    if (false) {
+        const p1 = new BABYLON.Vector3(3, 3, 3);
+        const p2 = new BABYLON.Vector3(5, 4, 5);
+        drawCyl(scene, p1, p2, new BABYLON.Color3(0, 0.5, 1)); 
+        
+        const pA = new BABYLON.Vector3(1, 1, 0);
+        const pB = new BABYLON.Vector3(7, 8, 9);
+        const pD =  new BABYLON.Vector3(7, 1, 9);
+        const pE =  new BABYLON.Vector3(0, 7, 0);
+        drawColoredCyl(scene, p1, p2, 1, pA);
+        drawColoredCyl(scene, p1, p2, 1, pE);
+        drawColoredCyl(scene, p1, p2, 2, pB);
+        drawColoredCyl(scene, p1, p2, 2, pD);
+        //drawColoredCyl(scene, p1, p2, 2, new BABYLON.Vector3(9, 4, 6));
+    }
+
+    // --- Addition
+    if (true) {
+        const pA = new BABYLON.Vector3(2, 2, 5);
+        const pB = new BABYLON.Vector3(7, 8, 13);
+        const pC = new BABYLON.Vector3(5, 10, 0);
+        drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 0), false); // yellow
+        drawArrow(scene, pA, pC, new BABYLON.Color3(1, 0, 1), false); // purple
+
+        const v = pB.subtract(pA);
+        const w = pC.subtract(pA);
+        const t = v.add(w);
+        drawArrow(scene, pA, t, new BABYLON.Color3(0, 1, 1), false); // light blue
+        drawArrow(scene, pB, t, new BABYLON.Color3(1, 1, 1), false); // white
+        drawArrow(scene, pC, t, new BABYLON.Color3(1, 1, 1), false); // white
+    }
     
     return scene;
 };

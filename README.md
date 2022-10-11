@@ -18,7 +18,7 @@ X, Y, Z axes are represented with R, G, B colors:
 
 A vector _v_ going from point _A_ to point _B_:
 
-$$ \overrightarrow{AB} = (x_B - x_A, y_B - y_A, z_B - z_A) $$ 
+$$ \overrightarrow{AB} = (x_B - x_A, y_B - y_A, z_B - z_A) $$
 
 where the parentheses are the [ordered set notation](https://en.wikipedia.org/wiki/Vector_notation#Ordered_set_notation) to represent the _x_, _y_, _z_ components of the vector.
 
@@ -33,7 +33,7 @@ drawArrow(scene, pO, v, new BABYLON.Color3(0, 1, 1), false);
 
 ![two vector notations](/images/vector_notation.jpg)
 
-### Vector length (aka magnitude):
+### Vector length (aka magnitude)
 
 $$ ||v|| = \sqrt{x^2 + y^2 + z^2} $$ 
 
@@ -41,7 +41,7 @@ $$ ||v|| = \sqrt{x^2 + y^2 + z^2} $$
 const length = BABYLON.Vector3.Distance(pA, pB);
 ```
 
-### Unit vector (normalizing the vector):
+### Unit vector (normalizing the vector)
 
 $$ \frac{v}{||v||} $$ 
 
@@ -113,10 +113,27 @@ drawArrow(scene, pA, pD, new BABYLON.Color3(1, 0, 1), false);
 
 ![cross product](/images/cross_product.jpg)
 
-The cross product can be used to identify which side the vector _b_ is in relation to the vector _a_  
+The cross product can be used to identify which side the vector _b_ is in relation to the vector _a_ (Wikipedia image):  
 
 ![cross product wikipedia](/images/cross_product_wiki.gif)
 
 ### Addition
 
-...
+$$ v + w = (x_v + x_w, y_v + y_w, z_v + z_w) $$
+
+```javascript
+const pA = new BABYLON.Vector3(2, 2, 5);
+const pB = new BABYLON.Vector3(7, 8, 13);
+const pC = new BABYLON.Vector3(5, 10, 0);
+drawArrow(scene, pA, pB, new BABYLON.Color3(1, 1, 0), false); // yellow
+drawArrow(scene, pA, pC, new BABYLON.Color3(1, 0, 1), false); // purple
+
+const v = pB.subtract(pA);
+const w = pC.subtract(pA);
+const t = v.add(w);
+drawArrow(scene, pA, t, new BABYLON.Color3(0, 1, 1), false); // light blue
+drawArrow(scene, pB, t, new BABYLON.Color3(1, 1, 1), false); // white
+drawArrow(scene, pC, t, new BABYLON.Color3(1, 1, 1), false); // white
+```
+
+![addition](/images/addition.jpg)
