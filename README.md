@@ -84,7 +84,7 @@ which can be simply derived from the dot product definition.
 
 $$ a \times b = ||a|| ||b|| \sin(\theta) n $$
 
-where \theta is the angle between _a_ and _b_ in the plane containing them (0°..180°) and _n_ is the unit vector perpendicular to such plane (right-hand rule):
+where &theta; is the angle between _a_ and _b_ in the plane containing them (0°..180°) and _n_ is the unit vector perpendicular to such plane (right-hand rule):
 
 ![right-hand rule](/images/right_hand.jpg)
 
@@ -131,9 +131,10 @@ drawArrow(scene, pA, pC, new BABYLON.Color3(1, 0, 1), false); // purple
 const v = pB.subtract(pA);
 const w = pC.subtract(pA);
 const t = v.add(w);
-drawArrow(scene, pA, t, new BABYLON.Color3(0, 1, 1), false); // light blue
-drawArrow(scene, pB, t, new BABYLON.Color3(1, 1, 1), false); // white
-drawArrow(scene, pC, t, new BABYLON.Color3(1, 1, 1), false); // white
+const pD = pA.add(t);
+drawArrow(scene, pA, pD, new BABYLON.Color3(0, 1, 1), false); // light blue
+drawArrow(scene, pB, pD, new BABYLON.Color3(1, 1, 1), false); // white
+drawArrow(scene, pC, pD, new BABYLON.Color3(1, 1, 1), false); // white
 ```
 
 ![addition](/images/addition.jpg)

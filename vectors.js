@@ -167,9 +167,10 @@ var createScene = function () {
         const v = pB.subtract(pA);
         const w = pC.subtract(pA);
         const t = v.add(w);
-        drawArrow(scene, pA, t, new BABYLON.Color3(0, 1, 1), false); // light blue
-        drawArrow(scene, pB, t, new BABYLON.Color3(1, 1, 1), false); // white
-        drawArrow(scene, pC, t, new BABYLON.Color3(1, 1, 1), false); // white
+        const pD = pA.add(t);
+        drawArrow(scene, pA, pD, new BABYLON.Color3(0, 1, 1), false); // light blue
+        drawArrow(scene, pB, pD, new BABYLON.Color3(1, 1, 1), false); // white
+        drawArrow(scene, pC, pD, new BABYLON.Color3(1, 1, 1), false); // white
     }
     
     return scene;
